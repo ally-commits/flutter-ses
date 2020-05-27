@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
-import 'package:sra/models/post_model.dart';
+import 'package:flutter/material.dart'; 
 import 'package:sra/screens/forum_post.dart';
 import 'package:sra/screens/loader.dart'; 
 
@@ -14,11 +13,7 @@ class Posts extends StatefulWidget {
 class _PostsState extends State<Posts> {
   @override
   Widget build(BuildContext context) {
-    print(questions);
-    return 
-    widget.questions.length == 0 ?
-    Center(child: Loader()) :
-    Column(
+    return Column(
       children: widget.questions.map((question) =>
           GestureDetector( 
             onTap: () {

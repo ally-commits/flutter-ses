@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart'; 
 import 'package:flutter/material.dart';
+import 'package:sra/loaders/home_blog_loader.dart';
 import 'package:sra/screens/blog_post.dart';
 import 'package:sra/screens/loader.dart';
 import 'package:sra/utils/var.dart';
@@ -42,7 +43,7 @@ class _BlogPostsState extends State<BlogPosts> {
     return Column(
       children: <Widget>[
         isLoading ?
-        Loader() : 
+        HomeBlogLoader() : 
         Container(
           padding: EdgeInsets.symmetric(vertical: 5.0),
           height: MediaQuery.of(context).size.width * 0.90, 
@@ -109,20 +110,18 @@ class _BlogPostsState extends State<BlogPosts> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                // CircleAvatar(
-                                //   radius: 10.0,
-                                //   backgroundImage: NetworkImage(blog.author.imageUrl)
-                                // ),
+                                CircleAvatar(
+                                  radius: 10.0,
+                                  backgroundImage: NetworkImage(blogs[index]["studentPath"])
+                                ),
                                 SizedBox(width: 8.0),
                                 Text(
-                                  // blog.author.name,
-                                  "author name",
+                                  blogs[index]["studentName"], 
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 14.0
                                   )
-                                ),
-                                
+                                ), 
                               ],
                             )
                           ],
@@ -140,8 +139,7 @@ class _BlogPostsState extends State<BlogPosts> {
                             ),
                             SizedBox(width: 5.0),
                             Text(
-                              // blog.created_at,
-                              "cretaed_at",
+                              blogs[index]["published_date"], 
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 12.0,

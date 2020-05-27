@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
-import 'package:sra/models/author_model.dart';
+import 'package:flutter/material.dart'; 
 import 'package:sra/screens/loader.dart';
 import 'package:sra/utils/var.dart';
 
@@ -37,8 +36,7 @@ class _AuthorScreenState extends State<AuthorScreen> {
     }
   }
   @override
-  Widget build(BuildContext context) {
-    print(author);
+  Widget build(BuildContext context) { 
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       body: SafeArea(
@@ -87,7 +85,7 @@ class _AuthorScreenState extends State<AuthorScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: Text(
-                  author[0]["username"], 
+                  "${author[0]["studentName"]} (${author[0]['username']})", 
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 24,
@@ -106,7 +104,7 @@ class _AuthorScreenState extends State<AuthorScreen> {
                     ),
                     SizedBox(width: 5.0),
                     Text(
-                      "St Aloysius College, Mangaluru",
+                      author[0]["cName"],
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 12
@@ -158,7 +156,7 @@ class _AuthorScreenState extends State<AuthorScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Text(
-                              "27",
+                              '${author[0]["blogCount"]}',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600,
@@ -181,7 +179,7 @@ class _AuthorScreenState extends State<AuthorScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Text(
-                              "131",
+                              '${author[0]["replyCount"]}',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600,
@@ -211,7 +209,7 @@ class _AuthorScreenState extends State<AuthorScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Text(
-                              "103",
+                              '${author[0]["blogFollowers"]}',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600,
@@ -220,7 +218,7 @@ class _AuthorScreenState extends State<AuthorScreen> {
                             ),
                             SizedBox(height: 5.0),
                             Text(
-                              "Likes",
+                              "Followers",
                               style: TextStyle(
                                 color: Colors.white, 
                               ),
@@ -241,7 +239,7 @@ class _AuthorScreenState extends State<AuthorScreen> {
                       topRight: Radius.circular(20)
                     )
                   ),
-                  child: Center(child: Text("No Post Yet..")),
+                  child: Center(child: Text("State : ${author[0]['stateName']}")),
                 ),
               )
             ],

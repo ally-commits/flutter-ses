@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:sra/loaders/forum_loader.dart';
 import 'package:sra/screens/blog_screen.dart';
 import 'package:sra/screens/forum_screen.dart';
 import 'package:sra/screens/loader.dart';
@@ -18,14 +19,16 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   bool isLoading = true;
   List questions = new List();
-  final dio = new Dio();
-
+  final dio = new Dio(); 
   @override
   void initState() {
     this._getData();
     super.initState(); 
   }
   void _getData() async { 
+    setState(() {
+      isLoading = true;
+    });
     var url = backendServer + "/questions";
     try {
       print(url);
@@ -35,12 +38,20 @@ class _HomeScreenState extends State<HomeScreen> {
         tList.add(response.data["data"][i]); 
       } 
       setState(() {
-        isLoading = false;
+        isLoading = false; 
         questions.addAll(tList);
         print("done"); 
       });
-    } catch(e) {
-      print(e);
+    } catch(e) { 
+      final snackBar = SnackBar(
+        content: Text('Error: Internal Server Error!'),
+        action: SnackBarAction(
+          label: 'Retry',
+          onPressed: () { 
+          },
+        ),
+      );
+      Scaffold.of(context).showSnackBar(snackBar);
     } 
   }
   @override
@@ -55,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      "Sra",
+                      "SES",
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 25.0,
@@ -66,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: <Widget>[
                         SizedBox(width: 20.0),
                         Icon(
-                          Icons.menu,
+                          Icons.dashboard,
                           size: 32.0,
                           color: Colors.black,
                         )
@@ -140,8 +151,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                     ),
-                  ), 
-                  Posts(questions: questions) 
+                  ),  
+                  isLoading ? ForumLoader() :Posts(questions: questions) 
                 ],
               ) 
             ],

@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:sra/models/author_model.dart';
+import 'package:sra/loaders/author_loader.dart'; 
 import 'package:sra/screens/author_screen.dart';
 import 'package:sra/screens/loader.dart';
 import 'package:sra/utils/var.dart';
@@ -32,7 +32,6 @@ class _FavAuthorsState extends State<FavAuthors> {
       setState(() {
         isLoading = true;
       });
-
       var url = backendServer + "/get-students";
       try {
         print(url);
@@ -55,43 +54,47 @@ class _FavAuthorsState extends State<FavAuthors> {
   }
   @override
   Widget build(BuildContext context) { 
-    return  Container(
-      height: 80.0, 
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: users.length,
-        itemBuilder: (BuildContext context, int index) {
-          return GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => AuthorScreen(
-                    id: users[index]["id"]
+    if(isLoading) {
+      return AuthorLoader();
+    } else {
+      return  Container(
+        height: 80.0, 
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: users.length,
+          itemBuilder: (BuildContext context, int index) {
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => AuthorScreen(
+                      id: users[index]["id"]
+                    )
                   )
-                )
-              );
-            },
-            child: Padding(
-              padding: EdgeInsets.only(left: 20.0, top: 10.0, bottom: 10.0),
-              child: Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration( 
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20.0),
-                  child: Image(
-                    image: NetworkImage(users[index]["path"]),
-                    fit: BoxFit.cover,
+                );
+              },
+              child: Padding(
+                padding: EdgeInsets.only(left: 20.0, top: 10.0, bottom: 10.0),
+                child: Container(
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration( 
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20.0),
+                    child: Image(
+                      image: NetworkImage(users[index]["path"]),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),
-            ),
-          );
-        }
-      ),
-    );
+            );
+          }
+        ),
+      );
+    }
   }
 }

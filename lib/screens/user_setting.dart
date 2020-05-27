@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sra/models/author_model.dart';
-
+import 'package:google_sign_in/google_sign_in.dart';
 class UserSetting extends StatefulWidget {
+  final GoogleSignInAccount user;
+
+  UserSetting({this.user});
   @override
   _UserSettingState createState() => _UserSettingState();
 }
@@ -92,7 +94,7 @@ class _UserSettingState extends State<UserSetting> {
                 children: <Widget>[
                   SizedBox(height: 60.0),
                   Text(
-                    john.name,
+                    widget.user.displayName,
                     style: TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.w600
@@ -111,6 +113,7 @@ class _UserSettingState extends State<UserSetting> {
               height: 100,
               width: 100,
               decoration: BoxDecoration(
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(100),
                 border: Border.all(
                   color: Colors.white,
@@ -120,7 +123,7 @@ class _UserSettingState extends State<UserSetting> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(100),
                 child: Image(
-                  image: AssetImage(john.imageUrl),
+                  image: NetworkImage(widget.user.photoUrl),
                   fit: BoxFit.contain,
                 ),
               ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sra/screens/blog_screen.dart';
 import 'package:sra/screens/forum_screen.dart';
 import 'package:sra/screens/home_screen.dart';
@@ -7,8 +8,8 @@ import 'package:sra/screens/user_setting.dart';
 
 class HomePage extends StatefulWidget {
   final int index;
-
-  HomePage({this.index});
+  final GoogleSignInAccount user;
+  HomePage({this.index, this.user});
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -22,12 +23,23 @@ class _HomePageState extends State<HomePage> {
     ForumScreen(),
     UserSetting()
   ]; 
+  Widget _buildBody() {
+    if(_selectedIndex == 0) {
+      return HomeScreen();
+    } else if(_selectedIndex == 1) {
+      return BlogScreen();
+    } else if(_selectedIndex == 2) {
+      return ForumScreen();
+    } else if(_selectedIndex == 3) {
+      return UserSetting(user: widget.user);
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold( 
       backgroundColor: Theme.of(context).primaryColor,
-      body: SafeArea(
-        child: _widgetOptions.elementAt(_selectedIndex),
+      body: SafeArea(  
+        child: _buildBody()
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(color: Colors.white, boxShadow: [

@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:html/dom.dart' as dom;
-import 'package:sra/models/post_model.dart';
+import 'package:sra/loaders/forum_loader.dart'; 
 import 'package:sra/screens/loader.dart';
 import 'package:sra/utils/var.dart'; 
 
@@ -48,12 +48,16 @@ class _ForumPostState extends State<ForumPost> {
         replies.addAll(tList);
         isLoading = false; 
         replyCompleted = response.data["replies"]["next_page_url"] == null ? true : false;
-        page++;
+        page = response.data["replies"]["current_page"] + 1;
         print("done"); 
       });
     } catch(e) {
       print(e);
     }
+  }
+  void dispose(){
+    page = 1;
+    super.dispose();
   }
   @override
   Widget build(BuildContext context) {
@@ -357,13 +361,13 @@ class _ForumPostState extends State<ForumPost> {
             ),
             replyCompleted ? Center(
               child: Text(
-                "----------------",
+                "______________________",
                 style: TextStyle(
                   fontSize: 22.0,
                   color: Colors.grey.withOpacity(0.6)
                 ),
               )
-            ) : Loader()
+            ) : ForumLoader()
           ],
           controller: _sc, 
         ),

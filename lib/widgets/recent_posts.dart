@@ -1,4 +1,3 @@
-import 'package:sra/models/blog_model.dart';
 import 'package:flutter/material.dart';
 import 'package:sra/screens/blog_post.dart';
 
@@ -14,7 +13,7 @@ class _RecentPostsState extends State<RecentPosts> {
   @override
   Widget build(BuildContext context) {
     return  Container(
-      color: Colors.white,
+      color: Colors.white, 
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: widget.blogs.map((blog) =>
